@@ -1,0 +1,26 @@
+-- Create variety store database
+CREATE TABLE store (ID INTEGER PRIMARY KEY, item TEXT, description TEXT, price INTEGER, quantity INTEGER);
+
+INSERT INTO store VALUES (1, "Water Bottle", "24 oz water bottle", 10, 200);
+INSERT INTO store VALUES (2, "VR Headset", "Virtual Reality game device", 300, 50);
+INSERT INTO store VALUES (3, "Graphics Tablet", "Small computer drawing tablet", 50, 100);
+INSERT INTO store VALUES (4, "Lotion", "20 oz lotion bottle", 6, 200);
+INSERT INTO store VALUES (5, "Smartphone", "128 GB Smartphone", 30, 150);
+INSERT INTO store VALUES (6, "Computer Monitor", "20 in PC monitor", 200, 75);
+INSERT INTO store VALUES (7, "Desk", "Large sturdy desk", 150, 20);
+INSERT INTO store VALUES (8, "Pan with lid", "9X9 inch pan with plastic lid", 20, 100);
+INSERT INTO store VALUES (9, "Sticky notes", "3 pads of 100 sticky notes", 2, 500);
+INSERT INTO store VALUES (10, "Piano", "88-key hammer action electronic piano", 600, 10);
+INSERT INTO store VALUES (11, "Mattress", "Queen sized memory foam mattress", 300, 50);
+INSERT INTO store VALUES (12, "Microphone kit", "Microphone, cables, pop filter, mic stand", 25, 200);
+INSERT INTO store VALUES (13, "Mug", "A mug with funny text", 10, 300);
+INSERT INTO store VALUES (14, "Books", "Assorted books", 5, 1000);
+INSERT INTO store VALUES (15, "Organizing drawers", "Plastic organizing drawers", 75, 100);
+
+--display the database ordered by price. 
+SELECT * FROM store
+ORDER BY price desc; 
+
+--Display total price of all items.
+SELECT SUM(price) FROM store;
+
