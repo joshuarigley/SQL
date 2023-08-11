@@ -1,0 +1,138 @@
+-- Pokemon SQL by Joshua Rigley
+-- The data for this project can be found at https://gist.github.com/pamelafox/26b9357c6120d3d0d27c2b90c950e8c6
+
+-- Combined total stats of all Pokemon.
+SELECT SUM(HP) AS "Total HP",
+       SUM(Attack) AS "Total Attack",
+       SUM(Defense) AS "Total Defense",
+       SUM(Sp_Atk) AS "Total Special Attack",
+       SUM(Sp_Def) AS "Total Special Defense",
+       SUM(Speed) AS "Total Speed"
+       FROM pokemon;
+
+-- Average stats of all Pokemon, using Round to remove decimals.
+SELECT ROUND(AVG(HP)) AS "Average HP",
+       ROUND(AVG(Attack)) AS "Average Attack",
+       ROUND(AVG(Defense)) AS "Average Defense",
+       ROUND(AVG(Sp_Atk)) AS "Average Special Attack",
+       ROUND(AVG(Sp_Def)) AS "Average Special Defense",
+       ROUND(AVG(Speed)) AS "Average Speed"
+       FROM pokemon;
+
+-- Using Max and Min to select Pokemon with highest/lowest stat from each column, using Union to combine for cleaner presentation.
+SELECT MAX(HP) AS "Highest/Lowest HP", Name FROM pokemon
+UNION ALL
+SELECT MIN(HP), Name FROM pokemon;
+
+SELECT MAX(Attack) AS "Highest/Lowest Attack", Name FROM pokemon
+UNION ALL
+SELECT MIN(Attack), Name FROM pokemon;
+
+SELECT MAX(Defense) AS "Highest/Lowest Defense", Name FROM pokemon
+UNION ALL
+SELECT MIN(Defense), Name FROM pokemon;
+
+SELECT MAX(Sp_Atk) AS "Highest/Lowest Special Attack", Name FROM pokemon
+UNION ALL
+SELECT MIN(Sp_Atk), Name FROM pokemon;
+
+SELECT MAX(Sp_Def) AS "Highest/Lowest Special Defense", Name FROM pokemon
+UNION ALL
+SELECT MIN(Sp_Def), Name FROM pokemon;
+
+SELECT MAX(Speed) AS "Highest/Lowest Speed", Name FROM pokemon
+UNION ALL
+SELECT MIN(Speed), Name FROM pokemon;
+
+
+-- Using Count where Type_1 or Type_2 match a specific type, outputting the total number of each type, then using Union to combine results into single area for cleaner presentation.
+SELECT Type_2, COUNT(*)
+FROM pokemon
+WHERE Type_1 = "Fairy" OR Type_2 = "Fairy"
+UNION
+SELECT Type_1, COUNT(*)
+FROM pokemon
+WHERE Type_1 = "Bug" OR Type_2 = "Bug"
+UNION
+SELECT Type_2, COUNT(*)
+FROM pokemon
+WHERE Type_1 = "Grass" OR Type_2 = "Grass"
+UNION
+SELECT Type_2, COUNT(*)
+FROM pokemon
+WHERE Type_1 = "Flying" OR Type_2 = "Flying"
+UNION
+SELECT Type_2, COUNT(*)
+FROM pokemon
+WHERE Type_1 = "Water" OR Type_2 = "Water"
+UNION
+SELECT Type_1, COUNT(*)
+FROM pokemon
+WHERE Type_1 = "Poison" OR Type_2 = "Poison"
+UNION
+SELECT Type_1, COUNT(*)
+FROM pokemon
+WHERE Type_1 = "Psychic" OR Type_2 = "Psychic"
+UNION
+SELECT Type_1, COUNT(*)
+FROM pokemon
+WHERE Type_1 = "Rock" OR Type_2 = "Rock"
+UNION
+SELECT Type_1, COUNT(*)
+FROM pokemon
+WHERE Type_1 = "Steel" OR Type_2 = "Steel"
+UNION
+SELECT Type_2, COUNT(*)
+FROM pokemon
+WHERE Type_1 = "Dark" OR Type_2 = "Dark"
+UNION
+SELECT Type_1, COUNT(*)
+FROM pokemon
+WHERE Type_1 = "Dragon" OR Type_2 = "Dragon"
+UNION
+SELECT Type_1, COUNT(*)
+FROM pokemon
+WHERE Type_1 = "Fire" OR Type_2 = "Fire"
+UNION
+SELECT Type_2, COUNT(*)
+FROM pokemon
+WHERE Type_1 = "Ground" OR Type_2 = "Ground"
+UNION
+SELECT Type_1, COUNT(*)
+FROM pokemon
+WHERE Type_1 = "Ice" OR Type_2 = "Ice"
+UNION
+SELECT Type_1, COUNT(*)
+FROM pokemon
+WHERE Type_1 = "Electric" OR Type_2 = "Electric"
+UNION
+SELECT Type_1, COUNT(*)
+FROM pokemon
+WHERE Type_1 = "Fighting" OR Type_2 = "Fighting"
+UNION
+SELECT Type_2, COUNT(*)
+FROM pokemon
+WHERE Type_1 = "Ghost" OR Type_2 = "Ghost"
+UNION
+SELECT Type_2, COUNT(*)
+FROM pokemon
+WHERE Type_1 = "Normal" OR Type_2 = "Normal";
+
+-- Using Count to select Pokemon according to Type, then grouping them by Type_1 and Type_2 to show total number of each Type pair. 
+-- Results with less than two per Type paid are removed for less clutter and results are ordered from greatest to lowest.
+SELECT Type_1, Type_2, COUNT(*)
+FROM pokemon
+GROUP BY Type_1, Type_2
+HAVING COUNT(*) > 2
+ORDER BY COUNT(*) Desc;
+
+-- Using Case to sort through Pokemon database and search for true conditions. When a condition is met, a new column is added attaching descriptive text to each row. 
+-- The order of conditions is carefully selected to ensure none are accidentally overwritten. Pokemon from Generation 4 or later are filtered out to reduce clutter.
+SELECT Name, Type_1, Type_2, Generation,
+CASE
+    WHEN Name = "Charizard" THEN "Favorite Pokemon"
+    WHEN Type_1 = "Fire" OR Type_2 = "Fire" THEN "Favorite Type"
+    WHEN Generation < 3 THEN "Favorite Generation"
+END AS "Favorites"
+FROM pokemon
+WHERE Generation < 4;
